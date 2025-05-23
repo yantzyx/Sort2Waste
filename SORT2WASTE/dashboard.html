@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sort2Waste</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Dashboard</h1>
+        </div>
+        
+        <main>
+            <div class="welcome-banner">
+                <img src="assets/welcome-banner.jpg" alt="Welcome to Sort2Waste" class="banner-img">
+                <h2>Hello, User!</h2>
+                <p>Let's make the world cleaner together</p>
+            </div>
+            
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <button class="btn" onclick="location.href='dispose_step1.html'">
+                    <i class="fas fa-trash-alt"></i> Dispose Waste
+                </button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h4>Total Disposals</h4>
+                    <p>24</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Points Earned</h4>
+                    <p>1,250</p>
+                </div>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-home nav-icon"></i>
+                <span>Home</span>
+            </a>
+            <a href="news.html" class="nav-item" data-page="news">
+                <i class="fas fa-newspaper nav-icon"></i>
+                <span>News</span>
+            </a>
+            <a href="dispose_step1.html" class="nav-item" data-page="dispose">
+                <i class="fas fa-trash-alt nav-icon"></i>
+                <span>Dispose</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-bell nav-icon"></i>
+                <span>Alerts</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-user nav-icon"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
