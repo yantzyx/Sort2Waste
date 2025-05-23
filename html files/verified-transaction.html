@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .confirmation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            max-width: 300px;
+        }
+        
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: #4CAF50;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .thank-you {
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .dashboard-button {
+            background-color: white;
+            color: #4CAF50;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+        
+        .dashboard-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .dashboard-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <div class="checkmark">✓</div>
+        <h1>You're all set!</h1>
+        <div class="thank-you">THANK YOU FOR USING ECOWASTE</div>
+        <a href="homepage.html" class="dashboard-button">go back to dashboard</a>
+    </div>
+
+    <script>
+        // Optional: Add animation for the checkmark
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkmark = document.querySelector('.checkmark');
+            checkmark.style.transform = 'scale(0)';
+            checkmark.style.transition = 'transform 0.5s ease-out';
+            
+            setTimeout(() => {
+                checkmark.style.transform = 'scale(1)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

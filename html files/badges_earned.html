@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Badges Earned</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --accent-color: #FFD700;
+            --text-dark: #333;
+            --text-light: #666;
+            --background: #f5f5f5;
+            --white: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .back-button::before {
+            content: "←";
+            margin-right: 5px;
+        }
+        
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "★";
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .badge {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .badge.earned {
+            background: radial-gradient(circle at 30% 30%, var(--accent-color), #FFC000);
+            box-shadow: 0 0 0 3px var(--primary-color), 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .badge-icon {
+            font-size: 36px;
+            color: var(--text-light);
+        }
+        
+        .badge.earned .badge-icon {
+            color: var(--primary-dark);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .badge-name {
+            position: absolute;
+            bottom: -25px;
+            font-size: 12px;
+            width: 100%;
+            text-align: center;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .badge.earned .badge-name {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .badge-progress {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .progress-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 15px;
+        }
+        
+        .progress-button {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        
+        .progress-button:active {
+            transform: translateY(0);
+        }
+        
+        .progress-button::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-button:hover::after {
+            left: 100%;
+        }
+        
+        .stats-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .stats-table th {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        .stats-table th:first-child {
+            border-top-left-radius: 10px;
+        }
+        
+        .stats-table th:last-child {
+            border-top-right-radius: 10px;
+        }
+        
+        .stats-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+        }
+        
+        .stats-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .stats-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .stats-table tr:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .correct-count {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .incorrect-count {
+            color: #f44336;
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            width: 75%;
+        }
+        
+        .celebrate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+        }
+        
+        .celebrate.show {
+            animation: celebrate 2s ease-out;
+        }
+        
+        @keyframes celebrate {
+            0% { opacity: 0; transform: scale(0.5); }
+            20% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.5); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            opacity: 0;
+        }
+        
+        @media (max-width: 600px) {
+            .badge {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .badge-icon {
+                font-size: 28px;
+            }
+            
+            .progress-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="homepage.html" class="back-button">Dashboard</a>
+        <h1>YOUR ECO ACHIEVEMENTS</h1>
+    </div>
+    
+    <div class="content">
+        <div class="section">
+            <h2 class="section-title">Your Badge Collection</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 20px;">
+                You've earned 4 out of 8 possible badges. Keep going to unlock them all!
+            </p>
+            
+            <div class="progress-container">
+                <div class="progress-title">
+                    <span>Collection Progress</span>
+                    <span>50%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%"></div>
+                </div>
+            </div>
+            
+            <div class="badges-container">
+                <!-- Earned Badges -->
+                <div class="badge earned" onclick="celebrate()">
+                    <div class="badge-icon">♻️</div>
+                    <div class="badge-name">Recycler</div>
+                    <div class="badge-progress" title="Level 2">2</div>
+                </div>
+                <div class="badge earned" onclick="celebrate()">
+                    <div class="badge-icon">🏆</div>
+                    <div class="badge-name">Eco Champ</div>
+                    <div class="badge-progress" title="Level 3">3</div>
+                </div>
+                <div class="badge earned" onclick="celebrate()">
+                    <div class="badge-icon">⭐</div>
+                    <div class="badge-name">Star Sorter</div>
+                    <div class="badge-progress" title="Level 1">1</div>
+                </div>
+                <div class="badge earned" onclick="celebrate()">
+                    <div class="badge-icon">🌱</div>
+                    <div class="badge-name">Green Starter</div>
+                </div>
+                
+                <!-- Unearned Badges -->
+                <div class="badge" title="Complete 50 more correct sorts to unlock">
+                    <div class="badge-icon">?</div>
+                    <div class="badge-name">Coming Soon</div>
+                </div>
+                <div class="badge" title="Maintain a 7-day streak to unlock">
+                    <div class="badge-icon">?</div>
+                    <div class="badge-name">Coming Soon</div>
+                </div>
+                <div class="badge" title="Reach level 5 to unlock">
+                    <div class="badge-icon">?</div>
+                    <div class="badge-name">Coming Soon</div>
+                </div>
+                <div class="badge" title="Invite 3 friends to unlock">
+                    <div class="badge-icon">?</div>
+                    <div class="badge-name">Coming Soon</div>
+                </div>
+            </div>
+            
+            <div class="progress-buttons">
+                <button onclick="window.location.href='My_Progress.html'" class="progress-button">My Progress</button>
+                <button onclick="window.location.href='neighborhood_rank.html'" class="progress-button">Neighborhood Rank</button>
+            </div>
+            
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Sorted Correctly</th>
+                        <th>Sorted Incorrectly</th>
+                        <th>Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mon</td>
+                        <td class="correct-count">8</td>
+                        <td class="incorrect-count">2</td>
+                        <td>80%</td>
+                    </tr>
+                    <tr>
+                        <td>Tue</td>
+                        <td class="correct-count">5</td>
+                        <td class="incorrect-count">0</td>
+                        <td>100%</td>
+                    </tr>
+                    <tr>
+                        <td>Wed</td>
+                        <td class="correct-count">3</td>
+                        <td class="incorrect-count">3</td>
+                        <td>50%</td>
+                    </tr>
+                    <tr>
+                        <td>Thu</td>
+                        <td class="correct-count">7</td>
+                        <td class="incorrect-count">1</td>
+                        <td>88%</td>
+                    </tr>
+                    <tr>
+                        <td>Fri</td>
+                        <td class="correct-count">0</td>
+                        <td class="incorrect-count">0</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Sat</td>
+                        <td class="correct-count">10</td>
+                        <td class="incorrect-count">2</td>
+                        <td>83%</td>
+                    </tr>
+                    <tr>
+                        <td>Sun</td>
+                        <td class="correct-count">6</td>
+                        <td class="incorrect-count">0</td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="celebrate" id="celebrate">
+        <div style="font-size: 100px; color: var(--accent-color);">🎉</div>
+    </div>
+    
+    <script>
+        function celebrate() {
+            const celebrateEl = document.getElementById('celebrate');
+            celebrateEl.classList.add('show');
+            
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+            
+            setTimeout(() => {
+                celebrateEl.classList.remove('show');
+            }, 2000);
+        }
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = -10 + 'px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            document.body.appendChild(confetti);
+            
+            const animation = confetti.animate([
+                { top: -10 + 'px', opacity: 1 },
+                { top: 100 + 'vh', opacity: 0 }
+            ], {
+                duration: 2000 + Math.random() * 3000,
+                easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+            });
+            
+            animation.onfinish = () => confetti.remove();
+        }
+        
+        // Add click event to all earned badges
+        document.querySelectorAll('.badge.earned').forEach(badge => {
+            badge.addEventListener('click', celebrate);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dispose Waste</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            font-size: 16px;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #388E3C; /* Darker green header */
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px;
+            text-align: center;
+            padding-right: 20px;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dispose-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .form-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #388E3C;
+        }
+        
+        .form-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #388E3C;
+        }
+        
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .input-row input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        
+        .add-button {
+            background-color: #388E3C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        
+        .upload-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .upload-button {
+            background-color: #388E3C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .next-button {
+            background-color: white;
+            color: #388E3C;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            align-self: flex-end;
+            margin-top: auto;
+        }
+        
+        .waste-type-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .quantity-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        /* Info button styles */
+        .info-button {
+            position: absolute;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #388E3C;
+            font-weight: bold;
+            cursor: pointer;
+
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            float: right;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .modal-title {
+            color: #388E3C;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .waste-category {
+            margin-bottom: 15px;
+        }
+        
+        .category-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .waste-items {
+            margin-left: 15px;
+        }
+        
+        .waste-items div {
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="homepage.html" class="back-button">Back</a>
+        <h1>DISPOSE WASTE</h1>
+        <div class="info-button" id="infoBtn">i</div>
+    </div>
+    
+    <div class="content">
+        <div class="dispose-form">
+            <div class="form-title">LIST ITEMS FOR DISPOSAL</div>
+            
+            <div class="form-section">
+                <div class="section-title">WASTE TYPE</div>
+                <input type="text" class="waste-type-input" placeholder="add item">
+                <input type="text" class="waste-type-input" placeholder="add item">
+                <input type="text" class="waste-type-input" placeholder="add item">
+                <input type="text" class="waste-type-input" placeholder="add item">
+                <input type="text" class="waste-type-input" placeholder="add item">
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">QUANTITY</div>
+                <input type="text" class="quantity-input" placeholder="add quantity">
+                <input type="text" class="quantity-input" placeholder="add quantity">
+                <input type="text" class="quantity-input" placeholder="add quantity">
+                <input type="text" class="quantity-input" placeholder="add quantity">
+                <input type="text" class="quantity-input" placeholder="add quantity">
+            </div>
+            
+            <div class="upload-section">
+                <button class="upload-button">
+                    <span>upload image</span>
+                </button>
+            </div>
+        </div>
+        
+        <button onclick="window.location.href='Location.html'" class="next-button">NEXT</button>
+    </div>
+
+    <!-- Waste Segregation Modal -->
+    <div class="modal" id="wasteModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-title">Mandatory segregation of solid waste at source</div>
+            
+            <div class="waste-category">
+                <div class="category-title">Types of Waste</div>
+            </div>
+            
+            <div class="waste-category">
+                <div class="category-title">Biodegradable</div>
+                <div class="waste-items">
+                    <div>Food/Kitchen Wastes</div>
+                    <div>Vegetable and Fruit residues</div>
+                    <div>Animal carcass</div>
+                </div>
+            </div>
+            
+            <div class="waste-category">
+                <div class="category-title">Recyclable</div>
+                <div class="waste-items">
+                    <div>PET Bottles</div>
+                    <div>PE Bottles</div>
+                    <div>Metal</div>
+                    <div>Bottle caps</div>
+                    <div>Damaged Plastics</div>
+                    <div>Paper/Carton</div>
+                    <div>Glass bottles</div>
+                    <div>Rubber tires and interiors</div>
+                </div>
+            </div>
+            
+            <div class="waste-category">
+                <div class="category-title">Residual Waste</div>
+                <div class="waste-items">
+                    <div>Snack Bag</div>
+                    <div>Thin film plastics</div>
+                    <div>Plastic wrappers</div>
+                    <div>Textile and leather trimmings</div>
+                    <div>Synthetic</div>
+                    <div>Worn-out garments</div>
+                    <div>Cigarette butts</div>
+                    <div>Diapers, sanitary napkins and tissues</div>
+                    <div>Broken ceramics</div>
+                </div>
+            </div>
+            
+            <div class="waste-category">
+                <div class="category-title">Special Waste</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Info button click handler
+        document.getElementById('infoBtn').addEventListener('click', function() {
+            document.getElementById('wasteModal').style.display = 'flex';
+        });
+        
+        // Close modal button
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('wasteModal').style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('wasteModal')) {
+                document.getElementById('wasteModal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboards</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --accent-color: #FFD700;
+            --text-dark: #333;
+            --text-light: #666;
+            --background: #f5f5f5;
+            --white: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .back-button::before {
+            content: "←";
+            margin-right: 5px;
+        }
+        
+        .content {
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-title::before {
+            content: "🏆";
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .leaderboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+        }
+        
+        .leaderboard th {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .leaderboard th:first-child {
+            border-top-left-radius: 10px;
+            width: 50px;
+        }
+        
+        .leaderboard th:last-child {
+            border-top-right-radius: 10px;
+        }
+        
+        .leaderboard td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 500;
+        }
+        
+        .leaderboard tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .leaderboard tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .leaderboard tr:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .leaderboard .rank {
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+        
+        .leaderboard .you {
+            background-color: rgba(255, 215, 0, 0.2);
+            font-weight: 600;
+        }
+        
+        .leaderboard .you .rank {
+            color: var(--primary-dark);
+        }
+        
+        .podium {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .podium-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .podium-place {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: var(--primary-dark);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .podium-name {
+            margin-top: 10px;
+            font-weight: 500;
+            text-align: center;
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-rank {
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px;
+            background-color: var(--primary-light);
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        @media (max-width: 600px) {
+            .content {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .podium-place {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .podium-name {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="badges_earned.html" class="back-button">Back</a>
+        <h1>LEADERBOARDS</h1>
+    </div>
+    
+    <div class="content">
+        <div class="section">
+            <h2 class="section-title">Purok 3 Leaderboard</h2>
+            
+            <div class="podium">
+                <div class="podium-step">
+                    <div class="podium-place" style="background-color: #FFD700;">1</div>
+                    <div class="podium-name">Juan Dela Cruz</div>
+                </div>
+                <div class="podium-step">
+                    <div class="podium-place" style="background-color: #C0C0C0;">2</div>
+                    <div class="podium-name">Anna Montana</div>
+                </div>
+                <div class="podium-step">
+                    <div class="podium-place" style="background-color: #CD7F32;">3</div>
+                    <div class="podium-name">Kyla Demigilio</div>
+                </div>
+            </div>
+            
+            <table class="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">1</td>
+                        <td>Juan Dela Cruz</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">2</td>
+                        <td>Anna Montana</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">3</td>
+                        <td>Kyla Demigilio</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">4</td>
+                        <td>Kenji Nerisi</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">5</td>
+                        <td>Timothee Chalamet</td>
+                    </tr>
+                    <tr class="you">
+                        <td class="rank">6</td>
+                        <td>Gian Louise Bueno (You)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="user-rank">
+                You're rank number 6 in purok 3!
+            </div>
+        </div>
+    </div>
+</body>
+</html>
